@@ -27,6 +27,13 @@
 
 
     <style>
+      html {
+        font-size: 12px;
+      }
+      .bg-orange {
+        background-color: #ff4000;
+      }
+
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -162,7 +169,7 @@
     </div>
 
     
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+<nav class="navbar navbar-expand-md navbar-dark bg-orange mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">BlackBox Exporter HTTP Discover</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">

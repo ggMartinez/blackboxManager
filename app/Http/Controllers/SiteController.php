@@ -61,4 +61,33 @@ class SiteController extends Controller
             with('url', $site->url) ->
             with('name', $site->name);
     }
+
+    public function Export(Request $request){
+        $sites = Site::all();
+        if(count($sites) == 0)
+            return redirect('/') -> with('error', true) -> with('action','export');
+        $response = "name,url,category,description\n";
+        foreach($sites as $site){
+            $response .= $site->name . "," . $site->url . "," . $site->category . "," . $site->description . "\n";
+        }
+        return response($response)
+            ->header('Content-Type', 'text/csv')
+            ->header('Content-Disposition', 'attachment; filename="sites.csv"');
+    }
+
+    public function Import(Request $request){
+        $file = $request->file('file');
+        $file->move('uploads', 'sites.csv');
+        $file = fopen('uploads/sites.csv', 'r');
+        $header = fgetcsv($file);
+        while($row = fgetcsv($file)){
+            $site = new Site;
+            $site->name = $row[0];
+            $site->url = $row[1];
+            $site->category = $row[2];
+            $site->description = $row[3];
+            $site->save();
+        }
+        return redirect('/') -> with('success', true) -> with('action', 'import');
+    }
 }

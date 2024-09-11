@@ -3,7 +3,7 @@
     
     <p class="fs-3">
         Active Monitors
-        <a href="#"  type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target=".modal"><i class="bi bi-plus-circle"></i> New Monitor</a>
+        <a href="#"  type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#newMonitor"><i class="bi bi-plus-circle"></i> New Monitor</a>
     </p>
     
     <br><br>
@@ -17,15 +17,28 @@
             @if(@session('action') === "delete" )
                 Monitor "<b>{{ session('name') }}</b>" for "<b>{{ session('url') }}</b>" deleted successfully.
             @endif
+
+
+            @if(@session('action') === "import" )
+                Monitors imported successfully.
+            @endif
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+    @endif
 
+    @if(@session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+             @if(@session('action') === "export" )
+               No monitors to export.
+            @endif
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     @endif
     
     <hr class="bg border-2 border-top border" />
     
 
-    <div class="modal fade" tabindex="-1">
+    <div id="newMonitor" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
@@ -54,6 +67,10 @@
             </div>
         </div>
     </div>
+
+    
+
+
     
     @if($categorizedMonitors === null || count($categorizedMonitors) === 0)
         <br>

@@ -25,7 +25,12 @@
     <link rel="icon" href="/favicons/favicon.ico">
     <meta name="theme-color" content="#712cf9">
 
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.slim.js"
+      integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
+      crossorigin="anonymous"></script>
 
+    <script src="/js/updateModal.js"></script>
     
   </head>
   <body>

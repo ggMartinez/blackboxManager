@@ -20,6 +20,19 @@ class SiteController extends Controller
             with('name', $request->name);
     }
 
+    public function Update(Request $request){
+        $site = Site::findOrFail($request->post("id"));
+        $site->name = $request->post("name");
+        $site->url = $request->post("url");
+        $site->category = $request->post("category");
+        $site->save();
+        return redirect('/') ->
+            with('success', true) ->
+            with('action', 'update') ->
+            with('url', $request->url) ->
+            with('name', $request->name);
+    }
+
 
     public function ListForWeb(Request $request){
         $categories = Site::select('category')->distinct()->get();

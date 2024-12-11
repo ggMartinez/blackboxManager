@@ -13,6 +13,7 @@
                         <th>Name</th>
                         <th>URL</th>
                         <th>Category</th>
+                        <th>Has auth</th>
                         <th>Added Date</th>
                         <th>Updated Date</th>
                         <th>Actions</th>
@@ -24,6 +25,9 @@
                             <td>{{ $site->name }}</td>
                             <td>{{ $site->url }}</td>
                             <td>{{ $site->category }}</td>
+                            <td> 
+                                <input class="form-check-input" type="checkbox" {{ $site->username != "" ? 'checked' : '' }} onclick="return false;">         
+                            </td>
                             <td>{{ $site->created_at->format('d/m/Y') }}</td>
                             <td>{{ $site->updated_at->format('d/m/Y') }}</td>
                             <td>

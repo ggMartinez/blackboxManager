@@ -12,6 +12,12 @@ class SiteController extends Controller
         $site->name = $request->post("name");
         $site->url = $request->post("url");
         $site->category = $request->post("category");
+
+        if($request->post("username") != null){
+            $site->username = $request->post("username");
+            $site->password = base64_encode($request->post("password"));
+        }
+
         $site->save();
         return redirect('/') ->
             with('success', true) ->
@@ -45,15 +51,15 @@ class SiteController extends Controller
             ];
         }
 
-        
-
         return view('home', ['categorizedMonitors' => $monitors]);
     }
 
     public function ListForAPI(Request $request){
         $sites =  Site::all();
+        $responses = [];
+
         foreach($sites as $site){
-            $response[] = [
+            $response = [
                 'targets' => [$site->url],
                 'labels' => [
                     'name' => $site->name,
@@ -61,8 +67,16 @@ class SiteController extends Controller
                     'description' => $site->description
                 ]
             ];
+
+            if($site->username != null){
+                $response['labels']['username'] = $site->username;
+                $response['labels']['password'] = base64_decode($site->password);
+            }
+            array_push($responses, $response);
+
+
         }
-        return $response;
+        return $responses;
     }
     
     public function Delete(Request $request, $id){

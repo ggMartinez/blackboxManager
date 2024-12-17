@@ -42,6 +42,17 @@ class SiteController extends Controller
 
     public function ListForWeb(Request $request){
         $categories = Site::select('category')->distinct()->get();
+        $monitors = $this -> generateSitesForWeb($categories);
+        return view('home', ['categorizedMonitors' => $monitors]);
+    }
+
+    public function ListForAPI(Request $request){
+        $sites =  Site::all();
+        $responses = $this -> generateSitesJson($sites);
+        return $responses;
+    }
+    
+    private function generateSitesForWeb($categories){
         $monitors = [];
         foreach($categories as $category){
             $sites = Site::where('category', $category->category)->get();
@@ -50,35 +61,34 @@ class SiteController extends Controller
                 'sites' => $sites
             ];
         }
-
-        return view('home', ['categorizedMonitors' => $monitors]);
+        return $monitors;
     }
-
-    public function ListForAPI(Request $request){
-        $sites =  Site::all();
+    private function generateSitesJson($sites){
         $responses = [];
-
         foreach($sites as $site){
             $response = [
-                'targets' => [$site->url],
+                'targets' => [$this -> generateTarget($site)],
                 'labels' => [
+                    'url' => $site->url,
                     'name' => $site->name,
                     'category' => $site->category,
                     'description' => $site->description
                 ]
             ];
-
-            if($site->username != null){
-                $response['labels']['username'] = $site->username;
-                $response['labels']['password'] = base64_decode($site->password);
-            }
             array_push($responses, $response);
-
-
         }
         return $responses;
     }
-    
+
+
+    private function generateTarget($site){
+        if( $site -> username != null){
+            $url = explode("://", $site -> url);
+            return $url[0] . "://" . $site->username . ":" . base64_decode($site->password) . "@" . $url[1];
+        }
+        return $site -> url;
+    }
+
     public function Delete(Request $request, $id){
         $site = Site::findOrFail($id);
         $site->delete();
@@ -91,12 +101,11 @@ class SiteController extends Controller
 
     public function Export(Request $request){
         $sites = Site::all();
-        if(count($sites) == 0)
-            return redirect('/') -> with('error', true) -> with('action','export');
+        if(count($sites) == 0) return redirect('/') -> with('error', true) -> with('action','export');
         $response = "name,url,category,description\n";
-        foreach($sites as $site){
-            $response .= $site->name . "," . $site->url . "," . $site->category . "," . $site->description . "\n";
-        }
+
+        foreach($sites as $site) $response .= $site->name . "," . $site->url . "," . $site->category . "," . $site->description . "\n";
+        
         return response($response)
             ->header('Content-Type', 'text/csv')
             ->header('Content-Disposition', 'attachment; filename="sites.csv"');

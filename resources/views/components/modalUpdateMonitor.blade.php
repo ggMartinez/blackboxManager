@@ -22,6 +22,29 @@
                         <label class="form-label">Category</label>
                         <input type="text" class="form-control" name="category">
                     </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="authUpdateCheckBox">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Basic Authentication
+                        </label>
+                    </div>
+
+                    <div id="auth-update">
+                        <hr class="hr hr-blurry" />
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                    </div>
+
+                    <br>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
@@ -29,3 +52,18 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(function() {
+            $("#auth-update").hide();
+        });
+
+        $("#authUpdateCheckBox").change(function() {
+            if(this.checked) {
+                $("#auth-update").show();
+            } else {
+                $("#auth-update").hide();
+            }
+        });
+
+    </script>

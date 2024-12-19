@@ -22,10 +22,10 @@
                     </div>
 
                     <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="authCheckBox">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Basic Authentication
-                    </label>
+                        <input class="form-check-input" type="checkbox" value="" id="authCheckBox">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Basic Authentication
+                        </label>
                     </div>
 
                     <div id="auth">

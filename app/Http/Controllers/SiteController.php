@@ -31,6 +31,10 @@ class SiteController extends Controller
         $site->name = $request->post("name");
         $site->url = $request->post("url");
         $site->category = $request->post("category");
+        if($request->post("username") != null){
+            $site->username = $request->post("username");
+            $site->password = base64_encode($request->post("password"));
+        }
         $site->save();
         return redirect('/') ->
             with('success', true) ->

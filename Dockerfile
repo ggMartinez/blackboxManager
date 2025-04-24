@@ -1,7 +1,7 @@
-FROM ggmartinez/laravel:php-82
+FROM ggmartinez/laravel:php-8.2-apache-arm64
 
-COPY . /app
-WORKDIR /app
-RUN mkdir /var/www/database/
+COPY . /var/www/html
+WORKDIR /var/www/html
+RUN mkdir /var/www/database
 RUN composer install --prefer-dist
-CMD php artisan key:generate && php artisan migrate --force --no-interaction && php artisan serve --host=0.0.0.0
+RUN chown -R apache /var/www/html/storage && chown -R apache /var/www/database

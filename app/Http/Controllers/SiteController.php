@@ -12,6 +12,8 @@ class SiteController extends Controller
         $site->name = $request->post("name");
         $site->url = $request->post("url");
         $site->category = $request->post("category");
+        
+        $site->relevant = $request->post("relevant") ? true : false;
 
         if($request->post("username") != null){
             $site->username = $request->post("username");
@@ -31,6 +33,8 @@ class SiteController extends Controller
         $site->name = $request->post("name");
         $site->url = $request->post("url");
         $site->category = $request->post("category");
+        $site->relevant = $request->post("relevant") ? true : false;
+
         if($request->post("username") != null){
             $site->username = $request->post("username");
             $site->password = base64_encode($request->post("password"));

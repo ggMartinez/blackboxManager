@@ -21,9 +21,17 @@
                         <input type="text" class="form-control" name="category">
                     </div>
 
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" value="1" id="relevantCheckBox" name="relevant">
+                        <label class="form-check-label" for="relevantCheckBox">
+                            Relevant
+                        </label>
+                    </div>
+
+
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="authCheckBox">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <label class="form-check-label" for="authCheckBox">
                             Basic Authentication
                         </label>
                     </div>

@@ -13,6 +13,12 @@ function showUpdateModal(id, name, url, category,relevant,username,password){
         $('#authUpdateCheckBox').prop('checked', true);
         $('#auth-update').show();
     }
+    else {
+        $('#authUpdateCheckBox').prop('checked', false);
+        $('#auth-update').hide();
+    }
+
+
     
     $('#updateMonitor input[name="username"]').val(username);
     $('#updateMonitor input[name="password"]').val(password);

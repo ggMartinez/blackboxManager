@@ -35,7 +35,7 @@
                             <td>{{ $site->created_at->format('d/m/Y') }}</td>
                             <td>{{ $site->updated_at->format('d/m/Y') }}</td>
                             <td>
-                                <button onClick="showUpdateModal('{{ $site->id }}','{{ $site->name }}','{{ $site->url }}','{{ $site->category }}',{{  $site->relevant == true  ? true : false }})" class="btn btn-warning"><i class="bi bi-pencil"></i></button>
+                                <button onClick="showUpdateModal('{{ $site->id }}','{{ $site->name }}','{{ $site->url }}', '{{ $site->category }}', {{ $site -> relevant }}, {!! $site->username === null || $site->username === '' ? 'null' : ('\'' . addslashes($site->username) . '\'') !!}, {!! $site->password === null || $site->password === '' ? 'null' : ('\'' . addslashes(base64_decode($site->password)) . '\'') !!} )" class="btn btn-warning"><i class="bi bi-pencil"></i></button>
                                 <a href="/monitor/{{ $site->id }}/delete" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                             </td>
                         </tr>

@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/monitor/update" method="post">
+                <form action="/monitor/update" method="post" id="updateMonitorForm">
                     @csrf
                     <input type="hidden" name="id" id="id" value="">
 
@@ -72,5 +72,16 @@
                 $("#auth-update").hide();
             }
         });
+
+        $("#updateMonitor").submit(function() {
+            if(!$("#authUpdateCheckBox").is(":checked")) {
+                $("input[name='username']").val(null);
+                $("input[name='password']").val(null);
+            }
+            return true;
+
+        });
+
+
 
     </script>

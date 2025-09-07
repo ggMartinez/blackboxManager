@@ -34,6 +34,8 @@ class SiteController extends Controller
         $site->url = $request->post("url");
         $site->category = $request->post("category");
         $site->relevant = $request->post("relevant") ? true : false;
+        $site->username = null;
+        $site->password = null;
 
         if($request->post("username") != null){
             $site->username = $request->post("username");
@@ -80,7 +82,8 @@ class SiteController extends Controller
                     'url' => $site->url,
                     'name' => $site->name,
                     'category' => $site->category,
-                    'description' => $site->description
+                    'description' => $site->description,
+                    'relevant' => $site->relevant
                 ]
             ];
             array_push($responses, $response);
@@ -110,10 +113,11 @@ class SiteController extends Controller
     public function Export(Request $request){
         $sites = Site::all();
         if(count($sites) == 0) return redirect('/') -> with('error', true) -> with('action','export');
-        $response = "name,url,category,description\n";
+        $response = "name,url,category,description,username,password,relevant\n";
 
-        foreach($sites as $site) $response .= $site->name . "," . $site->url . "," . $site->category . "," . $site->description . "\n";
-        
+        foreach($sites as $site) {
+            $response .= $site->name . "," . $site->url . "," . $site->category . "," . $site->description . "," . $site->username . "," . $site->password . "," . ($site->relevant ? '1' : '0') . "\n";
+        }
         return response($response)
             ->header('Content-Type', 'text/csv')
             ->header('Content-Disposition', 'attachment; filename="sites.csv"');
@@ -130,6 +134,9 @@ class SiteController extends Controller
             $site->url = $row[1];
             $site->category = $row[2];
             $site->description = $row[3];
+            $site->username = (isset($row[4]) && $row[4] !== '') ? $row[4] : null;
+            $site->password = (isset($row[5]) && $row[5] !== '') ? $row[5] : null;
+            $site->relevant = (isset($row[6]) && $row[6] !== '') ? (bool)$row[6] : null;
             $site->save();
         }
         return redirect('/') -> with('success', true) -> with('action', 'import');

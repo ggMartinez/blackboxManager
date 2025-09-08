@@ -83,7 +83,7 @@ class SiteController extends Controller
                     'name' => $site->name,
                     'category' => $site->category,
                     'description' => $site->description,
-                    'relevant' => $site->relevant
+                    'relevant' => $site->relevant ? "true" : "false"
                 ]
             ];
             array_push($responses, $response);
